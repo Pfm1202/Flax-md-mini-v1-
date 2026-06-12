@@ -521,7 +521,7 @@ async function setupCommandHandlers(socket, number) {
 ╰═════════════╯
 
 > *🌐 ᴍɪɴɪ ᴡᴇʙsɪᴛᴇ*
-- https://flax-mini-pair.onrender.com
+- https://flax-md-pair1.onrender.com
 > ʀᴇsᴘᴏɴᴅ ᴛɪᴍᴇ: ${Date.now() - msg.messageTimestamp * 1000}ms`;
 
                         const aliveMessage = {
@@ -5477,7 +5477,7 @@ async function EmpirePair(number, res) {
             },
             printQRInTerminal: false,
             logger,
-            browser: Browsers.macOS('Safari'),
+            browser: browser: ['Ubuntu', 'Chrome', '20.0.04'],
             connectTimeoutMs: 60000,
             keepAliveIntervalMs: 25000,
             markOnlineOnConnect: true,
