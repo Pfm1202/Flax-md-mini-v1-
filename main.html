@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ꜰʟᴀx-ᴍᴅ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #0d1117;
+      --surface:    #161b27;
+      --surface-2:  #1c2333;
+      --purple:     #6d5aff;
+      --purple-mid: #7c6aff;
+      --purple-dim: rgba(109,90,255,0.18);
+      --border:     rgba(255,255,255,0.07);
+      --text:       #ffffff;
+      --text-sub:   rgba(255,255,255,0.55);
+      --text-dim:   rgba(255,255,255,0.32);
+      --red:        #ff4d6a;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 0 40px;
+      overflow-x: hidden;
+    }
+
+    /* ── TOP NAV ── */
+    .nav {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .nav-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--purple-mid);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--purple);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ── HERO BADGE ── */
+    .page {
+      width: 100%;
+      max-width: 480px;
+      padding: 28px 18px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--purple);
+      box-shadow: 0 0 0 6px rgba(109,90,255,0.15);
+    }
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--purple);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      padding: 7px 16px;
+      border-radius: 999px;
+      align-self: flex-start;
+    }
+
+    .hero-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--purple-mid);
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-sub);
+      line-height: 1.55;
+      margin-top: -8px;
+    }
+
+    /* ── MAIN CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-head {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-top: -8px;
+    }
+
+    /* phone input row */
+    .phone-input {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-2);
+      border: 1.5px solid rgba(109,90,255,0.45);
+      border-radius: 14px;
+      padding: 0 16px;
+      height: 58px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .phone-input:focus-within {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(109,90,255,0.18);
+    }
+    .phone-input i {
+      color: var(--text-dim);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .phone-input input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: 0.03em;
+    }
+    .phone-input input::placeholder { color: var(--text-dim); }
+    .phone-input input[type=number]::-webkit-inner-spin-button,
+    .phone-input input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    /* generate button */
+    #submit {
+      width: 100%;
+      height: 56px;
+      border: none;
+      border-radius: 14px;
+      background: var(--purple);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      letter-spacing: 0.02em;
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    #submit:hover {
+      background: #7c6aff;
+      box-shadow: 0 6px 24px rgba(109,90,255,0.38);
+      transform: translateY(-1px);
+    }
+    #submit:active { transform: translateY(0); }
+    #submit:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* waiting */
+    #waiting-message {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      display: none;
+    }
+
+    /* pair output */
+    #pair { min-height: 20px; }
+
+    .msg-error {
+      font-size: 0.85rem;
+      color: var(--red);
+      background: rgba(255,77,106,0.1);
+      border: 1px solid rgba(255,77,106,0.2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .msg-loading {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      text-align: center;
+    }
+
+    #copy {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-2);
+      border: 1.5px solid var(--purple);
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: background .2s, box-shadow .2s;
+      gap: 12px;
+    }
+    #copy:hover {
+      background: rgba(109,90,255,0.1);
+      box-shadow: 0 0 0 3px rgba(109,90,255,0.15);
+    }
+    #copy .code-label {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    #copy .code-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--purple-mid);
+      letter-spacing: 0.12em;
+      margin-top: 2px;
+    }
+    #copy .copy-icon {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: color .2s;
+    }
+    #copy:hover .copy-icon { color: var(--purple-mid); }
+
+    /* ── HOW TO USE ── */
+    .how-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 18px;
+    }
+    .how-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .how-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+    .how-step:last-child { margin-bottom: 0; }
+    .step-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--purple-dim);
+      border: 1.5px solid rgba(109,90,255,0.4);
+      color: var(--purple-mid);
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .how-step strong { color: var(--text); font-weight: 600; }
+
+    /* ── BOTTOM ACTIONS ── */
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-join {
+      flex: 1;
+      height: 48px;
+      border: 1.5px solid var(--purple);
+      border-radius: 12px;
+      background: var(--purple-dim);
+      color: var(--purple-mid);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .2s, box-shadow .2s;
+    }
+    .btn-join:hover {
+      background: rgba(109,90,255,0.28);
+      box-shadow: 0 4px 16px rgba(109,90,255,0.2);
+    }
+    .btn-clear {
+      height: 48px;
+      padding: 0 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text-dim);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-clear:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* ── STATUS ROW ── */
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      padding: 2px 2px;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+      margin-right: 5px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .footer-note {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 0 18px;
+    }
+
+    /* ── TOAST ── */
+    .notification {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--surface);
+      border: 1px solid var(--purple);
+      border-radius: 10px;
+      padding: 10px 18px;
+      color: var(--purple-mid);
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      z-index: 9999;
+      transition: transform .35s cubic-bezier(.22,1,.36,1), opacity .35s;
+      opacity: 0;
+      white-space: nowrap;
+    }
+    .notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <span class="nav-title">
+      <img src="https://files.catbox.moe/viz0lg.jpg" alt="FLAX-MD" class="nav-logo">
+      FLAX-MINI-PAIR 
+    </span>
+    <button class="nav-back" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
+  </nav>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <img src="https://files.catbox.moe/viz0lg.jpg" alt="FLAX-MINI-PAIR Logo" class="hero-logo">
+    <div class="badge">⚡ WHATSAPP BOT PAIR</div>
+    <div class="hero-title">FLAX-MINI </div>
+    <div class="hero-sub">Choose how you'd like to connect your WhatsApp session below.</div>
+
+    <!-- MAIN CARD -->
+    <div class="card">
+      <div>
+        <div class="card-head">Get Pair Code</div>
+        <div class="card-desc" style="margin-top:6px">Enter your WhatsApp number with country code to generate a pairing code.</div>
+      </div>
+
+      <div class="phone-input">
+        <i class="fas fa-phone"></i>
+        <input placeholder="26373836XXXX" type="number" id="number">
+      </div>
+
+      <button id="submit">
+        <i class="fas fa-key"></i> Generate Code
+      </button>
+
+      <div id="waiting-message">
+        <i class="fas fa-circle-notch fa-spin"></i> Please wait…
+      </div>
+
+      <main id="pair"></main>
+
+      <div class="status-row">
+        <span><span class="status-dot" id="statusDot"></span><span id="status">Online</span></span>
+        <span id="uptime">--:--:--</span>
+      </div>
+    </div>
+
+    <!-- HOW TO USE -->
+    <div class="how-card">
+      <div class="how-title">How to use:</div>
+      <div class="how-step">
+        <div class="step-badge">1</div>
+        <span>Open WhatsApp → <strong>Settings</strong> → <strong>Linked Devices</strong></span>
+      </div>
+      <div class="how-step">
+        <div class="step-badge">2</div>
+        <span>Tap <strong>Link a Device</strong> → <strong>Link with phone number</strong></span>
+      </div>
+      <div class="how-step">
+        <div class="step-badge">3</div>
+        <span>Enter the code shown above and your bot will connect instantly.</span>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button class="btn-join" id="joinBtn">
+        <i class="fab fa-whatsapp"></i> Join Channel
+      </button>
+      <button class="btn-clear" id="clearBtn">
+        <i class="fas fa-redo-alt"></i> Reset
+      </button>
+    </div>
+
+    <div class="footer-note">Not an official WhatsApp product. Use at your own risk.</div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notif-text">Code copied!</span>
+  </div>
+
+  <script>
+    /* ── CLOCK ── */
+    function tick(){
+      const now = new Date();
+      let h=now.getHours(), m=String(now.getMinutes()).padStart(2,'0'), s=String(now.getSeconds()).padStart(2,'0');
+      const ap=h>=12?'PM':'AM'; h=h%12||12;
+      document.getElementById('uptime').textContent=`${h}:${m}:${s} ${ap}`;
+    }
+    setInterval(tick,1000); tick();
+
+    /* ── TOAST ── */
+    function showNotif(msg, isErr){
+      const n=document.getElementById('notification');
+      const i=n.querySelector('i');
+      document.getElementById('notif-text').textContent=msg;
+      n.style.borderColor = isErr ? '#ff4d6a' : 'var(--purple)';
+      n.style.color       = isErr ? '#ff4d6a' : 'var(--purple-mid)';
+      i.className = isErr ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+      n.classList.add('show');
+      setTimeout(()=>n.classList.remove('show'), 3000);
+    }
+
+    /* ── COPY ── */
+    async function Copy(){
+      const el=document.getElementById('copy');
+      const val=el.querySelector('.code-val');
+      if(!val) return;
+      await navigator.clipboard.writeText(val.textContent);
+      const icon=el.querySelector('.copy-icon');
+      icon.className='fas fa-check copy-icon';
+      icon.style.color='#22c55e';
+      showNotif('Code copied to clipboard!');
+      setTimeout(()=>{ icon.className='fas fa-copy copy-icon'; icon.style.color=''; }, 1500);
+    }
+
+    /* ── REFS ── */
+    const pairEl   = document.getElementById('pair');
+    const submitBtn= document.getElementById('submit');
+    const numInput = document.getElementById('number');
+    const waitMsg  = document.getElementById('waiting-message');
+    const statusEl = document.getElementById('status');
+    const statusDot= document.getElementById('statusDot');
+
+    function setStatus(state){
+      const map = {
+        online:  { text:'Online',     color:'#22c55e' },
+        working: { text:'Processing', color:'#f59e0b' },
+        paired:  { text:'Paired',     color:'#6d5aff' },
+        error:   { text:'Error',      color:'#ff4d6a' },
+      };
+      const s = map[state] || map.online;
+      statusEl.textContent = s.text;
+      statusDot.style.background  = s.color;
+      statusDot.style.boxShadow   = `0 0 6px ${s.color}`;
+    }
+
+    /* ── SUBMIT ── */
+    submitBtn.addEventListener('click', async(e)=>{
+      e.preventDefault();
+      const raw = numInput.value.replace(/[^0-9]/g,'');
+
+      if(!raw){
+        pairEl.innerHTML=`<div class="msg-error"><i class="fas fa-exclamation-circle"></i> Enter your number with country code.</div>`;
+        return;
+      }
+      if(raw.length < 11){
+        pairEl.innerHTML=`<div class="msg-error"><i class="fas fa-times-circle"></i> Number too short — include country code.</div>`;
+        return;
+      }
+
+      numInput.type='text';
+      numInput.value='+'+raw;
+
+      pairEl.innerHTML=`<div class="msg-loading"><i class="fas fa-circle-notch fa-spin"></i> Connecting…</div>`;
+      waitMsg.style.display='block';
+      setStatus('working');
+
+      try{
+        const res  = await fetch(`/code?number=${raw}`);
+        const data = await res.json();
+        const code = data.code || 'Unavailable';
+        pairEl.innerHTML=`
+          <div id="copy" onclick="Copy()">
+            <div>
+              <div class="code-label">Your Pair Code</div>
+              <div class="code-val">${code}</div>
+            </div>
+            <i class="fas fa-copy copy-icon"></i>
+          </div>`;
+        setStatus('paired');
+      } catch(err){
+        pairEl.innerHTML=`<div class="msg-error"><i class="fas fa-wifi"></i> Server unreachable. Try again later.</div>`;
+        setStatus('error');
+        showNotif('Connection failed', true);
+      } finally {
+        waitMsg.style.display='none';
+      }
+    });
+
+    /* ── CLEAR ── */
+    document.getElementById('clearBtn').addEventListener('click',()=>{
+      numInput.value=''; numInput.type='number';
+      pairEl.innerHTML='';
+      setStatus('online');
+    });
+
+    /* ── JOIN ── */
+    document.getElementById('joinBtn').addEventListener('click',()=>{
+      window.open('https://whatsapp.com/channel/0029VbBFnViFy727MExYuO3Q','_blank');
+    });
+
+    /* ── ENTER ── */
+    numInput.addEventListener('keydown',e=>{ if(e.key==='Enter') submitBtn.click(); });
+  </script>
+</body>
+</html>
