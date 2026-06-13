@@ -5500,24 +5500,19 @@ async function EmpirePair(number, res) {
             }
         }, 45000);
 
-        if (!socket.authState.creds.registered) {
-            let retries = config.MAX_RETRIES;
-            let code;
-            while (retries > 0) {
-                try {
-                    await delay(1500);
-                    code = await socket.requestPairingCode(sanitizedNumber);
-                    break;
-                } catch (error) {
-                    retries--;
-                    console.warn(`Failed to request pairing code: ${retries}, error.message`, retries);
-                    await delay(2000 * (config.MAX_RETRIES - retries));
-                }
-            }
-            if (!res.headersSent) {
-                res.send({ code });
-            }
+let codeSent = false;
+if (!socket.authState.creds.registered) {
+    socket.ev.on('connection.update', async (update) => {
+        if (codeSent) return;
+        if (update.connection === 'connecting' || update.qr) {
+            await delay(2000);
+            const code = await socket.requestPairingCode(sanitizedNumber);
+            const formatted = code?.match(/.{1,4}/g)?.join('-') || code;
+            codeSent = true;
+            if (!res.headersSent) res.send({ code: formatted });
         }
+    });
+                    } 
 
         socket.ev.on('creds.update', async () => {
             await saveCreds();
